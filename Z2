@@ -1,8 +1,8 @@
-def t_op():
-    qualifier = float(
+def op():
+    opr = float(
         (x[0] * y[1] * z[2])  +  (x[1] * y[2] * z[0])  +  (x[2] * y[0] * z[1])  - 
         (x[2] * y[1] * z[0])  -  (x[0] * y[2] * z[1])  -  (x[1] * y[0] * z[2]))
-    print(qualifier, " - Определитель\n")
+    print(opr, " - Определитель\n")
 f = open('Solution.txt', 'w')
 b = [int(), int(), int()]
 x = [int(input("x0 = ")), int(input("x1 = ")), int(input("x2 = "))]
@@ -40,11 +40,11 @@ f.write("|")
 f.write(str(b[2])) 
 f.write(")\n")
 print("\n(",x, "|", b[0], ")\n(", y, "|", b[1], ")\n(", z, "|", b[2], ")\n")
-t_op() 
-qualifier = float(x[0] * y[1] * z[2] + x[1] * y[2] * z[0] + x[2] * y[0] * z[1] - x[2] * y[1] * z[0] - x[0] * y[2] * z[1] - x[1] * y[0] * z[2])
-f.write(str(qualifier))
+op() 
+opr = float(x[0] * y[1] * z[2] + x[1] * y[2] * z[0] + x[2] * y[0] * z[1] - x[2] * y[1] * z[0] - x[0] * y[2] * z[1] - x[1] * y[0] * z[2])
+f.write(str(opr))
 f.write(" - Определитель\n")
-if qualifier ==0:
+if opr ==0:
     print("Систему невозможно решить матричным способом и методом Крамера")
     f.write("Систему невозможно решить матричным способом и методом Крамера")
     f.close()
@@ -53,9 +53,9 @@ else:
    det2 = float(x[0] * b[1] * z[2] + b[0] * y[2] * z[0] + x[2] * y[0] * b[2] - x[2] * b[1] * z[0] - x[0] * y[2] * b[2] - b[0] * y[0] * z[2]) 
    det3 = float(x[0] * y[1] * b[2] + x[1] * b[1] * z[0] + b[0] * y[0] * z[1]
 - b[0] * y[1] * z[0] - x[0] * b[1] * z[1] - x[1] * y[0] * b[2])
-   ot1 = float(det1/qualifier)
-   otv2 = float(det2/qualifier)
-   otv3 = float(det3/qualifier)
+   ot1 = float(det1/opr)
+   otv2 = float(det2/opr)
+   otv3 = float(det3/opr)
    print("\nРешение методом Крамера :\nx1 = ", ot1, "\nx2 = ", otv2, "\nx3 = ", otv3)
    f.write("\nРешение методом Крамера :\nx1 = ") 
    f.write(str(ot1)) 
