@@ -1,0 +1,111 @@
+from math import sqrt
+
+
+
+file_input = open('input.txt', 'r')
+equ = file_input.read()
+file_input.close()
+
+
+
+def f_t_c(equ):
+    equ = equ.lower()
+    equ = equ.replace(' ', '')
+    equ = equ.replace(',', '.')
+    index_of_x = equ.find('x')
+    index_of_second_x = equ.find('x', index_of_x + 1)
+    if equ[0] == 'x':
+        a = 1
+    elif equ[:2] == '-x':
+        a = -1
+    else:
+        try:
+            a = int(equ[:index_of_x])
+        except:
+            a = float(equ[:index_of_x])
+
+    try:
+        try:
+            b = int(equ[index_of_x + 3:index_of_second_x])
+        except:
+            if equ[index_of_x + 3] == '-':
+                b = -1
+            elif equ[index_of_x + 3] == '+':
+                b = 1
+        c = int(equ[index_of_second_x + 1:equ.find('=')])
+    except:
+        try:
+            b = float(equ[index_of_x + 3:index_of_second_x])
+        except:
+            if equ[index_of_x + 3] == '-':
+                b = -1
+            elif equ[index_of_x + 3] == '+':
+                b = 1
+        c = float(equ[index_of_second_x + 1:equ.find('=')])
+    return a, b, c
+
+
+def Viete_Theorem(a, b, c):
+    for i in range(-100, 100):
+        x_1 = i
+        for j in range(-100, 100):
+            x_2 = j
+            if x_1 + x_2 == -b / a and x_1 * x_2 == c / a:
+                return x_1, x_2
+
+
+def disk(a, b, c):
+    disk = b * b - 4 * a * c
+
+    if disk > 0:
+        x_1 = (-b - sqrt(disk)) / (2 * a)
+        x_2 = (-b + sqrt(disk)) / (2 * a)
+        return x_1, x_2
+
+    elif disk == 0:
+        x_1 = -b / 2 * a
+        x_2 = 'none'
+        return x_1, x_2
+    elif disk < 0:
+
+        disk = -disk
+        x_1 = '({0} - {1}i) / {2}'.format(-b, sqrt(disk), 2 * a)
+        x_2 = '({0} + {1}i) / {2}'.format(-b, sqrt(disk), 2 * a)
+        return x_1, x_2
+
+def proverka(a, b, c, x_1, x_2):
+    if a * x_1 * x_1 + b * x_2 + c == 0:
+        return True
+    else:
+        return False
+
+
+a, b, c = f_t_c(equ)
+
+if a == 1:
+    try:
+        x_1, x_2 = Viete_Theorem(a, b, c)
+    except:
+        x_1, x_2 = disk(a, b, c)
+elif a == -1:
+    a = -a
+    b = -b
+    c = -c
+    try:
+        x_1, x_2 = Viete_Theorem(a, b, c)
+    except:
+        x_1, x_2 = disk(a, b, c)
+else:
+    x_1, x_2 = disk(a, b, c)
+
+file_output = open('output.txt', 'w')
+if proverka(a, b, c, x_1, x_2):
+    file_output.write('x1 = ' + str(x_1))
+    file_output.write('\nx2 = ' + str(x_2))
+else:
+    file_output.write('Error')
+
+
+
+
+file_output.close()
